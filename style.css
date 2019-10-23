@@ -9,23 +9,6 @@
     left: 320px;
     
   }
-
-  section {
-    width: 300px;
-  }
-}
-
-@media screen and (max-width: 480px){
-
-
-}
-
-#ornament {
-  background-image: url(board.png);
-  height: 300px;
-  width: 300px;
-  background-position: center;
-  background-size: contain;
 }
 
 section {
