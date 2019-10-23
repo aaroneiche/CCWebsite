@@ -100,15 +100,15 @@ let drawButtons = () => {
   ctx.fillRect(p(0.22),p(0.72),p(0.13),p(0.13));
   
   //right button
-  ctx.fillRect(324,360,65,65);
+  ctx.fillRect(p(0.648),p(0.72),p(0.13),p(0.13));
 
   ctx.fillStyle = "lightgrey";
   ctx.beginPath();
-  ctx.arc(143, 392, 15, 0, 2 * Math.PI);
+  ctx.arc(p(0.286), p(0.784), p(0.03), 0, 2 * Math.PI);
   ctx.fill();
 
   ctx.beginPath();
-  ctx.arc(356, 392, 15, 0, 2 * Math.PI);
+  ctx.arc(p(0.712), p(0.784), p(0.03), 0, 2 * Math.PI);
   ctx.fill();
 }
 
