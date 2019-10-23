@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', e=>{
 
   
   canvas.addEventListener("mousedown",e=>{
-    if(e.clientX > 110 && e.clientX < 175) {
+    if(e.clientX > p(0.22) && e.clientX < p(0.33)) {
       console.log("clicking button 1!");
     }else if(e.clientX > 324 && e.clientX < 389) {
       console.log("clicking button 2!");
