@@ -1,0 +1,39 @@
+@media screen and (min-width: 630px){
+
+  header {
+    width: 100%;
+  }
+
+  #virtualOrnament {
+    position: fixed;
+    left: 320px;
+    
+  }
+
+  section {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 480px){
+
+
+}
+
+#ornament {
+  background-image: url(board.png);
+  height: 300px;
+  width: 300px;
+  background-position: center;
+  background-size: contain;
+}
+
+section {
+  width: 300px;
+}
+
+section#video-instructions {
+  background-color: black;
+  height: 200px;
+  width: 300px;
+}
