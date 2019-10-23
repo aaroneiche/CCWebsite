@@ -1,0 +1,173 @@
+let canvas;
+let ctx;
+let currentMode = 0;
+
+let totalDays = (date) => {
+  m = date.getMonth();
+  let days = 0;
+  switch(m) {
+    case  11:   //December
+      return 25 - date.getDate();
+      break;
+    case 10:    //November
+      return (30 - date.getDate()) + 25;
+      break;
+    case 9:    //October
+      let t = (31 - date.getDate()) + 55;
+      return (t > 63) ? 63: t ;
+      break;
+  }
+}
+
+
+let ar = [0,1,0,1,0,1,0,1,0,0,0,0,1,1];
+
+document.addEventListener('DOMContentLoaded', e=>{
+  canvas = document.querySelector('canvas');
+  ctx = document.querySelector('canvas').getContext('2d');
+  console.log("setup");
+  bg();
+  setInterval(()=>{
+    let d = new Date();
+      
+      if(d.getSeconds() % 12 == 0) {
+        currentMode = !currentMode;
+      } 
+
+      let dm = 0;
+      let hs = 0;
+
+      if(currentMode == 0) {
+        dm = (59 - d.getMinutes()).toString(2).padStart(6,0);
+        hs = (59 - d.getSeconds()).toString(2).padStart(6,0);
+      } else{
+        
+        dm = totalDays(d).toString(2).padStart(6,0);
+        hs = (23 - d.getHours()).toString(2).padStart(6,0);
+        
+      }
+
+      let ind = (currentMode == 1) ? ([1,0]): ([0,1]);
+      ar = [...ind,...dm,...hs];
+
+      ctx.shadowBlur = 0;
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.drawImage(img, 0, 0,ctx.canvas.width, ctx.canvas.height);
+      drawLights(ar);
+      drawButtons();
+      
+  },1000);
+
+  
+  canvas.addEventListener("mousedown",e=>{
+    if(e.clientX > 110 && e.clientX < 175) {
+      console.log("clicking button 1!");
+    }else if(e.clientX > 324 && e.clientX < 389) {
+      console.log("clicking button 2!");
+    }
+  })
+  
+  canvas.addEventListener("mouseup",e=>{
+    console.log("releasing!");
+    
+  })
+    
+});
+
+//Percentage calculator
+let p = i => {
+  
+  return document.querySelector('canvas').width*i;
+}
+
+
+let bg = () => {
+  img = new Image();
+  img.src = "board.png";
+
+  img.onload = ()=>{
+    ctx.drawImage(img, 0, 0,ctx.canvas.width, ctx.canvas.height); // destination rectangle
+    // drawLights(ar);
+  };
+}
+
+let drawButtons = () => {
+  ctx.fillStyle = "gray";
+  ctx.shadowBlur = 0;
+  //left button
+  //old -> ctx.fillRect(110,360,65,65);
+  //Uses percentage calculations instead of pixels
+  ctx.fillRect(p(0.22),p(0.72),p(0.13),p(0.13));
+  
+  //right button
+  ctx.fillRect(324,360,65,65);
+
+  ctx.fillStyle = "lightgrey";
+  ctx.beginPath();
+  ctx.arc(143, 392, 15, 0, 2 * Math.PI);
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(356, 392, 15, 0, 2 * Math.PI);
+  ctx.fill();
+}
+
+let drawLights = leds => {
+/* 
+  leds, similar to the actual electronics 
+  is a bit string 14 bits long. 
+*/
+
+//Lookup table defining the basic data: 
+  let lookup = [
+    [97,100,20,15,'r'],
+    [383,100,20,15,'g'],
+    [64,190,15,20,'g'],
+    [135,190,15,20,'g'],
+    [207,190,15,20,'g'],
+    [278,190,15,20,'g'],
+    [349,190,15,20,'g'],
+    [420,190,15,20,'g'],
+    [64,290,15,20,'r'],
+    [135,290,15,20,'r'],
+    [207,290,15,20,'r'],
+    [278,290,15,20,'r'],
+    [349,290,15,20,'r'],
+    [420,290,15,20,'r']
+  ]
+  
+  leds.forEach((e,i) => {
+    
+    switch(lookup[i][4]) {
+      case 'r' :
+        if (e == 0) {
+          ctx.fillStyle = "#770000";
+          ctx.shadowBlur = 0;
+        }else{
+          ctx.fillStyle = "#FF0000";
+          ctx.shadowColor = "#FF0000"
+          ctx.shadowBlur = 15;
+        }
+      break;
+      case 'g' :
+        if (e == 0) {
+          ctx.fillStyle = "#007700";
+          ctx.shadowBlur = 0;
+        }else{
+          ctx.fillStyle = "#00FF00";
+          ctx.shadowColor = "#00FF00"
+          ctx.shadowBlur = 15;
+        }
+      break;
+    }
+
+    //draw the rectangle on or off        
+    ctx.fillRect(lookup[i][0], lookup[i][1], lookup[i][2], lookup[i][3]);
+  });
+}
+
+/* 
+22%, 72%, 13%, 13%
+
+*/
+
