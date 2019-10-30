@@ -60,15 +60,21 @@ document.addEventListener('DOMContentLoaded', e=>{
 
   
   canvas.addEventListener("mousedown",e=>{
-    if(e.clientX > p(0.22) && e.clientX < p(0.33)) {
+
+
+    //Get the position of the canvas
+    let sx = document.querySelector("canvas").getBoundingClientRect().x;
+    let sy = document.querySelector("canvas").getBoundingClientRect().y;
+
+    if(e.clientX > sx + p(0.22) && e.clientX < sx + p(0.35)) {
       console.log("clicking button 1!");
-    }else if(e.clientX > 324 && e.clientX < 389) {
+    }else if(e.clientX > sx + p(0.64) && e.clientX < sx + p(0.78)) {
       console.log("clicking button 2!");
     }
   })
   
   canvas.addEventListener("mouseup",e=>{
-    console.log("releasing!");
+    // console.log("releasing!");
     
   })
     
