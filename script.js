@@ -2,6 +2,10 @@ let canvas;
 let ctx;
 let currentMode = 0;
 
+let lastButtonPress = 0;
+let lastButtonRelease = 0;
+
+
 let totalDays = (date) => {
   m = date.getMonth();
   let days = 0;
@@ -59,26 +63,37 @@ document.addEventListener('DOMContentLoaded', e=>{
   },1000);
 
   
-  canvas.addEventListener("mousedown",e=>{
-
-
-    //Get the position of the canvas
-    let sx = document.querySelector("canvas").getBoundingClientRect().x;
-    let sy = document.querySelector("canvas").getBoundingClientRect().y;
-
-    if(e.clientX > sx + p(0.22) && e.clientX < sx + p(0.35)) {
-      console.log("clicking button 1!");
-    }else if(e.clientX > sx + p(0.64) && e.clientX < sx + p(0.78)) {
-      console.log("clicking button 2!");
-    }
-  })
+  canvas.addEventListener("mousedown", press)
   
-  canvas.addEventListener("mouseup",e=>{
-    // console.log("releasing!");
-    
-  })
-    
+  canvas.addEventListener("mouseup", release);
 });
+
+//Button Press handlers 
+let press = e => {
+  //Get the position of the canvas
+  let sx = document.querySelector("canvas").getBoundingClientRect().x;
+  let sy = document.querySelector("canvas").getBoundingClientRect().y;
+
+  if(e.clientX > sx + p(0.22) && e.clientX < sx + p(0.35)) {
+    console.log("clicking button 1!");
+    lastButtonPress = new Date().getTime()
+
+  }else if(e.clientX > sx + p(0.64) && e.clientX < sx + p(0.78)) {
+    console.log("clicking button 2!");
+  }
+}
+
+let release = () => {
+  // console.log("releasing!");
+  lastButtonRelease = new Date().getTime();  
+  let time = (lastButtonRelease - lastButtonPress)/1000;
+  if(time >= 3) {
+    //Toggle setting mode
+    console.log("switch modes!");
+  } 
+}
+
+
 
 //Percentage calculator
 let p = i => {
