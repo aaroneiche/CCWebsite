@@ -83,7 +83,7 @@ let p = i => {
 
 let bg = () => {
   img = new Image();
-  img.src = "board.png";
+  img.src = "CCsmall.png";
 
   img.onload = ()=>{
     ctx.drawImage(img, 0, 0,ctx.canvas.width, ctx.canvas.height); // destination rectangle
