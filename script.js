@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', e=>{
   document.querySelector("#date")
     .addEventListener('change', dateChange);
   
+  document.querySelector("#time")
+    .addEventListener('change', timeChange);
+  
   //Setup a timer to update the display every second.
   setInterval(updateCountdown, 1000);
 
@@ -96,9 +99,27 @@ let updateCountdown = () => {
 
 
 let dateChange = e => {
-  console.log(e);
-  currentTime.set('day',e.value)
+  console.log(e.target.value);
+  let date = e.target.value.split("-");
+  running = false;
+  
+  currentTime.set('year',date[0]);
+  currentTime.set('month',date[1]);
+  currentTime.set('day',date[2]);
+  updateCountdown();
 }
+
+let timeChange = e => {
+  console.log(e.target.value);
+  let time = e.target.value.split(":");
+  running = false;
+  
+  currentTime.set('hour',time[0]);
+  currentTime.set('minute',time[1]);
+  currentTime.set('second',time[2]);
+  updateCountdown();
+}
+
 
 //Button Press handlers 
 let press = e => {
