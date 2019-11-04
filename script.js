@@ -5,6 +5,7 @@ let currentMode = 0;
 let lastButtonPress = 0;
 let lastButtonRelease = 0;
 
+let currentTime = null;
 
 let totalDays = (date) => {
   m = date.get('month');
@@ -28,27 +29,32 @@ let ar = [0,1,0,1,0,1,0,1,0,0,0,0,1,1];
 
 
 let setFormVals = (dateTime) => {
-  document.querySelector("#date").value = dayjs().format('YYYY-MM-DD');
-  document.querySelector("#time").value = dayjs().format('HH:mm:ss');
+  document.querySelector("#date").value = dateTime.format('YYYY-MM-DD');
+  document.querySelector("#time").value = dateTime.format('HH:mm:ss');
 }
 
 //Application loaded, do the setup.
 document.addEventListener('DOMContentLoaded', e=>{
+  
+  //Sets the current date/time when the app starts.
+  currentTime = dayjs();
+  setFormVals(currentTime);
+
 
   canvas = document.querySelector('canvas');
   ctx = document.querySelector('canvas').getContext('2d');
   console.log("setup");
   bg();
 
-
-
   document.querySelector("#date")
     .addEventListener('change', dateChange);
   
   setInterval(()=>{
-    let d =  dayjs();
-      
-      if(d.get('seconds') % 12 == 0) {
+    //Add a second every second.
+    currentTime = currentTime.add(1,'s');
+    setFormVals(currentTime);
+
+      if(currentTime.get('seconds') % 12 == 0) {
         currentMode = !currentMode;
       } 
 
@@ -56,13 +62,11 @@ document.addEventListener('DOMContentLoaded', e=>{
       let hs = 0;
 
       if(currentMode == 0) {
-        dm = (59 - d.get('minutes')).toString(2).padStart(6,0);
-        hs = (59 - d.get('seconds')).toString(2).padStart(6,0);
+        dm = (59 - currentTime.get('minutes')).toString(2).padStart(6,0);
+        hs = (59 - currentTime.get('seconds')).toString(2).padStart(6,0);
       } else{
-        
-        dm = totalDays(d).toString(2).padStart(6,0);
-        hs = (23 - d.get('hours')).toString(2).padStart(6,0);
-        
+        dm = totalDays(currentTime).toString(2).padStart(6,0);
+        hs = (23 - currentTime.get('hours')).toString(2).padStart(6,0);
       }
 
       let ind = (currentMode == 1) ? ([1,0]): ([0,1]);
