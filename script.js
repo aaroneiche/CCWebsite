@@ -11,13 +11,13 @@ let totalDays = (date) => {
   let days = 0;
   switch(m) {
     case  11:   //December
-      return 25 - date.get('date');
+      return 24 - date.get('date');
       break;
     case 10:    //November
-      return (30 - date.get('date')) + 25;
+      return (30 - date.get('date')) + 24;
       break;
     case 9:    //October
-      let t = (31 - date.get('date')) + 55;
+      let t = (31 - date.get('date')) + 54;
       return (t > 63) ? 63: t ;
       break;
   }
