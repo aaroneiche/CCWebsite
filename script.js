@@ -7,17 +7,17 @@ let lastButtonRelease = 0;
 
 
 let totalDays = (date) => {
-  m = date.getMonth();
+  m = date.get('month');
   let days = 0;
   switch(m) {
     case  11:   //December
-      return 25 - date.getDate();
+      return 25 - date.get('date');
       break;
     case 10:    //November
-      return (30 - date.getDate()) + 25;
+      return (30 - date.get('date')) + 25;
       break;
     case 9:    //October
-      let t = (31 - date.getDate()) + 55;
+      let t = (31 - date.get('date')) + 55;
       return (t > 63) ? 63: t ;
       break;
   }
@@ -26,15 +26,29 @@ let totalDays = (date) => {
 
 let ar = [0,1,0,1,0,1,0,1,0,0,0,0,1,1];
 
+
+let setFormVals = (dateTime) => {
+  document.querySelector("#date").value = dayjs().format('YYYY-MM-DD');
+  document.querySelector("#time").value = dayjs().format('HH:mm:ss');
+}
+
+//Application loaded, do the setup.
 document.addEventListener('DOMContentLoaded', e=>{
+
   canvas = document.querySelector('canvas');
   ctx = document.querySelector('canvas').getContext('2d');
   console.log("setup");
   bg();
+
+
+
+  document.querySelector("#date")
+    .addEventListener('change', dateChange);
+  
   setInterval(()=>{
-    let d = new Date();
+    let d =  dayjs();
       
-      if(d.getSeconds() % 12 == 0) {
+      if(d.get('seconds') % 12 == 0) {
         currentMode = !currentMode;
       } 
 
@@ -42,12 +56,12 @@ document.addEventListener('DOMContentLoaded', e=>{
       let hs = 0;
 
       if(currentMode == 0) {
-        dm = (59 - d.getMinutes()).toString(2).padStart(6,0);
-        hs = (59 - d.getSeconds()).toString(2).padStart(6,0);
+        dm = (59 - d.get('minutes')).toString(2).padStart(6,0);
+        hs = (59 - d.get('seconds')).toString(2).padStart(6,0);
       } else{
         
         dm = totalDays(d).toString(2).padStart(6,0);
-        hs = (23 - d.getHours()).toString(2).padStart(6,0);
+        hs = (23 - d.get('hours')).toString(2).padStart(6,0);
         
       }
 
@@ -67,6 +81,10 @@ document.addEventListener('DOMContentLoaded', e=>{
   
   canvas.addEventListener("mouseup", release);
 });
+
+let dateChange = e => {
+  console.log(e);
+}
 
 //Button Press handlers 
 let press = e => {
