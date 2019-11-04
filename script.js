@@ -6,6 +6,7 @@ let lastButtonPress = 0;
 let lastButtonRelease = 0;
 
 let currentTime = null;
+let running = true;
 
 let totalDays = (date) => {
   m = date.get('month');
@@ -40,7 +41,6 @@ document.addEventListener('DOMContentLoaded', e=>{
   currentTime = dayjs();
   setFormVals(currentTime);
 
-
   canvas = document.querySelector('canvas');
   ctx = document.querySelector('canvas').getContext('2d');
   console.log("setup");
@@ -49,45 +49,55 @@ document.addEventListener('DOMContentLoaded', e=>{
   document.querySelector("#date")
     .addEventListener('change', dateChange);
   
-  setInterval(()=>{
-    //Add a second every second.
-    currentTime = currentTime.add(1,'s');
-    setFormVals(currentTime);
+  //Setup a timer to update the display every second.
+  setInterval(updateCountdown, 1000);
 
-      if(currentTime.get('seconds') % 12 == 0) {
-        currentMode = !currentMode;
-      } 
-
-      let dm = 0;
-      let hs = 0;
-
-      if(currentMode == 0) {
-        dm = (59 - currentTime.get('minutes')).toString(2).padStart(6,0);
-        hs = (59 - currentTime.get('seconds')).toString(2).padStart(6,0);
-      } else{
-        dm = totalDays(currentTime).toString(2).padStart(6,0);
-        hs = (23 - currentTime.get('hours')).toString(2).padStart(6,0);
-      }
-
-      let ind = (currentMode == 1) ? ([1,0]): ([0,1]);
-      ar = [...ind,...dm,...hs];
-
-      ctx.shadowBlur = 0;
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      ctx.drawImage(img, 0, 0,ctx.canvas.width, ctx.canvas.height);
-      drawLights(ar);
-      drawButtons();
-      
-  },1000);
-
-  
+  //Setup 
   canvas.addEventListener("mousedown", press)
-  
   canvas.addEventListener("mouseup", release);
 });
 
+let updateCountdown = () => {
+  if(running){
+    //Add a second every second.
+    currentTime = currentTime.add(1,'s');
+    
+    //Update the values in the form.
+    setFormVals(currentTime);
+  }
+
+  if(currentTime.get('seconds') % 12 == 0) {
+    currentMode = !currentMode;
+  } 
+
+  let dm = 0;
+  let hs = 0;
+
+  if(currentMode == 0) {
+    dm = (59 - currentTime.get('minutes')).toString(2).padStart(6,0);
+    hs = (59 - currentTime.get('seconds')).toString(2).padStart(6,0);
+  } else{
+    dm = totalDays(currentTime).toString(2).padStart(6,0);
+    hs = (23 - currentTime.get('hours')).toString(2).padStart(6,0);
+  }
+
+  let ind = (currentMode == 1) ? ([1,0]): ([0,1]);
+  ar = [...ind,...dm,...hs];
+
+  ctx.shadowBlur = 0;
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.drawImage(img, 0, 0,ctx.canvas.width, ctx.canvas.height);
+  drawLights(ar);
+  drawButtons();
+   
+}
+
+
+
+
 let dateChange = e => {
   console.log(e);
+  currentTime.set('day',e.value)
 }
 
 //Button Press handlers 
