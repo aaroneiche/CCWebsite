@@ -11,6 +11,7 @@ let running = true;
 let totalDays = (date) => {
   m = date.get('month');
   let days = 0;
+  
   switch(m) {
     case  11:   //December
       return 24 - date.get('date');
@@ -22,6 +23,9 @@ let totalDays = (date) => {
       let t = (31 - date.get('date')) + 54;
       return (t > 63) ? 63: t ;
       break;
+    default: 
+      return 63;
+      break;
   }
 }
 
@@ -30,6 +34,7 @@ let ar = [0,1,0,1,0,1,0,1,0,0,0,0,1,1];
 
 
 let setFormVals = (dateTime) => {
+  console.log(dateTime);
   document.querySelector("#date").value = dateTime.format('YYYY-MM-DD');
   document.querySelector("#time").value = dateTime.format('HH:mm:ss');
 }
@@ -64,6 +69,7 @@ let updateCountdown = () => {
   if(running){
     //Add a second every second.
     currentTime = currentTime.add(1,'s');
+    // console.log(currentTime);
     
     //Update the values in the form.
     setFormVals(currentTime);
@@ -71,7 +77,7 @@ let updateCountdown = () => {
 
   if(currentTime.get('seconds') % 12 == 0) {
     currentMode = !currentMode;
-  } 
+  }
 
   let dm = 0;
   let hs = 0;
@@ -102,10 +108,13 @@ let dateChange = e => {
   console.log(e.target.value);
   let date = e.target.value.split("-");
   running = false;
+
+  console.log(Number(date[0]), Number(date[1]), Number(date[2]));
+
   
-  currentTime = currentTime.set('year',date[0]);
-  currentTime = currentTime.set('month',date[1]);
-  currentTime = currentTime.set('day',date[2]);
+  currentTime = currentTime.set('year',Number(date[0]));
+  currentTime = currentTime.set('month',Number(date[1]) - 1);
+  currentTime = currentTime.set('date',Number(date[2]));
   updateCountdown();
 }
 
