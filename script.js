@@ -103,9 +103,9 @@ let dateChange = e => {
   let date = e.target.value.split("-");
   running = false;
   
-  currentTime.set('year',date[0]);
-  currentTime.set('month',date[1]);
-  currentTime.set('day',date[2]);
+  currentTime = currentTime.set('year',date[0]);
+  currentTime = currentTime.set('month',date[1]);
+  currentTime = currentTime.set('day',date[2]);
   updateCountdown();
 }
 
@@ -114,9 +114,9 @@ let timeChange = e => {
   let time = e.target.value.split(":");
   running = false;
   
-  currentTime.set('hour',time[0]);
-  currentTime.set('minute',time[1]);
-  currentTime.set('second',time[2]);
+  currentTime = currentTime.set('hour',time[0]);
+  currentTime = currentTime.set('minute',time[1]);
+  currentTime = currentTime.set('second',time[2]);
   updateCountdown();
 }
 
@@ -146,22 +146,19 @@ let release = () => {
   } 
 }
 
-
-
 //Percentage calculator
 let p = i => {
-  
   return document.querySelector('canvas').width*i;
 }
 
 
 let bg = () => {
   img = new Image();
-  img.src = "CCsmall.png";
+  // img.src = "CCsmall.png";
+  img.src = "board.png";
 
   img.onload = ()=>{
     ctx.drawImage(img, 0, 0,ctx.canvas.width, ctx.canvas.height); // destination rectangle
-    // drawLights(ar);
   };
 }
 
