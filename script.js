@@ -34,7 +34,6 @@ let ar = [0,1,0,1,0,1,0,1,0,0,0,0,1,1];
 
 
 let setFormVals = (dateTime) => {
-  console.log(dateTime);
   document.querySelector("#date").value = dateTime.format('YYYY-MM-DD');
   document.querySelector("#time").value = dateTime.format('HH:mm:ss');
 }
@@ -73,18 +72,18 @@ let updateCountdown = () => {
     
     //Update the values in the form.
     setFormVals(currentTime);
-  }
-
-  if(currentTime.get('seconds') % 12 == 0) {
-    currentMode = !currentMode;
+    
+    if(currentTime.get('seconds') % 12 == 0) {
+      currentMode = !currentMode;
+    }
   }
 
   let dm = 0;
   let hs = 0;
 
   if(currentMode == 0) {
-    dm = (59 - currentTime.get('minutes')).toString(2).padStart(6,0);
-    hs = (59 - currentTime.get('seconds')).toString(2).padStart(6,0);
+    dm = (60 - currentTime.get('minutes')).toString(2).padStart(6,0);
+    hs = (60 - currentTime.get('seconds')).toString(2).padStart(6,0);
   } else{
     dm = totalDays(currentTime).toString(2).padStart(6,0);
     hs = (23 - currentTime.get('hours')).toString(2).padStart(6,0);
@@ -105,13 +104,9 @@ let updateCountdown = () => {
 
 
 let dateChange = e => {
-  console.log(e.target.value);
   let date = e.target.value.split("-");
   running = false;
 
-  console.log(Number(date[0]), Number(date[1]), Number(date[2]));
-
-  
   currentTime = currentTime.set('year',Number(date[0]));
   currentTime = currentTime.set('month',Number(date[1]) - 1);
   currentTime = currentTime.set('date',Number(date[2]));
@@ -119,13 +114,13 @@ let dateChange = e => {
 }
 
 let timeChange = e => {
-  console.log(e.target.value);
   let time = e.target.value.split(":");
   running = false;
   
   currentTime = currentTime.set('hour',time[0]);
   currentTime = currentTime.set('minute',time[1]);
-  currentTime = currentTime.set('second',time[2]);
+  currentTime = currentTime.set('second',(time[2] == undefined) ? 0 : time[2]);
+  
   updateCountdown();
 }
 
