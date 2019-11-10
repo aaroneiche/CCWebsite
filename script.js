@@ -1,5 +1,14 @@
 let canvas;
 let ctx;
+
+/* Mode:
+0 - Countdown minutes and seconds
+1 - Countdown days and hours
+2 - Setting minutes
+3 - Setting Hour
+4 - Setting Day
+5 - Setting Month
+*/
 let currentMode = 0;
 
 let lastButtonPress = 0;
@@ -100,9 +109,6 @@ let updateCountdown = () => {
    
 }
 
-
-
-
 let dateChange = e => {
   let date = e.target.value.split("-");
   running = false;
@@ -133,21 +139,68 @@ let press = e => {
 
   if(e.clientX > sx + p(0.22) && e.clientX < sx + p(0.35)) {
     console.log("clicking button 1!");
-    lastButtonPress = new Date().getTime()
-
+    lastButtonPress = new Date().getTime();
   }else if(e.clientX > sx + p(0.64) && e.clientX < sx + p(0.78)) {
     console.log("clicking button 2!");
   }
 }
 
-let release = () => {
+let release = e => {
   // console.log("releasing!");
-  lastButtonRelease = new Date().getTime();  
-  let time = (lastButtonRelease - lastButtonPress)/1000;
-  if(time >= 3) {
-    //Toggle setting mode
-    console.log("switch modes!");
-  } 
+  lastButtonRelease = new Date().getTime();
+
+  let sx = document.querySelector("canvas").getBoundingClientRect().x;
+  let sy = document.querySelector("canvas").getBoundingClientRect().y;
+
+  
+  if(e.clientX > sx + p(0.22) && e.clientX < sx + p(0.35)) {
+    
+    //Left button
+    let time = (lastButtonRelease - lastButtonPress)/1000;
+    console.log(time);
+    if(time >= 3) {
+      //Toggle setting mode
+      console.log("switch modes!");
+      if(currentMode > 1) {
+        //Switch back to countdown mode
+        currentMode = 0;
+      }else {
+        //Switch to setting Minutes.
+        currentMode = 2;
+        running = false;
+        
+
+      }
+
+    } else {
+      //advance mode
+      if(currentMode > 1) {
+        //advance through 5 and wrap around
+        currentMode = (++currentMode > 5) ? 2 : currentMode ;
+      }else{
+        // toggle between 0 and 1
+        currentMode = (currentMode == 0) ? 1 : 0;
+      }
+
+
+      
+    }
+
+  }else if(e.clientX > sx + p(0.64) && e.clientX < sx + p(0.78)) {
+    //Right Button
+
+    switch(currentMode) {
+      case 2:
+        let m = currentTime.get('minutes');
+        currentTime.set('minutes',((m++ > 59)?0:m++));
+        console.log(m);
+      break;
+      
+    }
+
+  }
+  console.log(currentMode);
+  updateCountdown();
 }
 
 //Percentage calculator
