@@ -15,7 +15,16 @@ let lastButtonPress = 0;
 let lastButtonRelease = 0;
 
 let currentTime = null;
-let running = true;
+let running;
+
+let pause = () => {
+  running = false;
+  document.querySelector("#playpause").innerHTML = `▶️`
+}
+let play = () => {
+  running = true;
+  document.querySelector("#playpause").innerHTML = `⏸️`
+}
 
 let totalDays = (date) => {
   m = date.get('month');
@@ -38,9 +47,7 @@ let totalDays = (date) => {
   }
 }
 
-
 let ar = [0,1,0,1,0,1,0,1,0,0,0,0,1,1];
-
 
 let setFormVals = (dateTime) => {
   document.querySelector("#date").value = dateTime.format('YYYY-MM-DD');
@@ -71,6 +78,18 @@ document.addEventListener('DOMContentLoaded', e=>{
   //Setup 
   canvas.addEventListener("mousedown", press)
   canvas.addEventListener("mouseup", release);
+
+  //Start the counting
+  play();
+  document.querySelector("#playpause").addEventListener('click',e=>{
+    if(running) {
+      pause();
+    }else{
+      play();
+    }
+    event.preventDefault();
+  })
+
 });
 
 let updateCountdown = () => {
@@ -111,7 +130,7 @@ let updateCountdown = () => {
 
 let dateChange = e => {
   let date = e.target.value.split("-");
-  running = false;
+  pause();
 
   currentTime = currentTime.set('year',Number(date[0]));
   currentTime = currentTime.set('month',Number(date[1]) - 1);
@@ -121,7 +140,7 @@ let dateChange = e => {
 
 let timeChange = e => {
   let time = e.target.value.split(":");
-  running = false;
+  pause();
   
   currentTime = currentTime.set('hour',time[0]);
   currentTime = currentTime.set('minute',time[1]);
@@ -167,7 +186,7 @@ let release = e => {
       }else {
         //Switch to setting Minutes.
         currentMode = 2;
-        running = false;
+        pause();
         
 
       }
