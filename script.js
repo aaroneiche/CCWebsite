@@ -17,6 +17,10 @@ let lastButtonRelease = 0;
 let currentTime = null;
 let running;
 
+//Our update timers.
+let countTimer;
+let setTimer;
+
 let pause = () => {
   running = false;
   document.querySelector("#playpause").innerHTML = `▶️`
@@ -73,7 +77,7 @@ document.addEventListener('DOMContentLoaded', e=>{
     .addEventListener('change', timeChange);
   
   //Setup a timer to update the display every second.
-  setInterval(updateCountdown, 1000);
+  countTimer = setInterval(updateCountdown, 1000);
 
   //Setup 
   canvas.addEventListener("mousedown", press)
@@ -106,18 +110,39 @@ let updateCountdown = () => {
     }
   }
 
-  let dm = 0;
-  let hs = 0;
+  let dm =  [0];
+  let hs =  [0];
+  let ind = [ar[0],ar[1]];
 
-  if(currentMode == 0) {
-    dm = (60 - currentTime.get('minutes')).toString(2).padStart(6,0);
-    hs = (60 - currentTime.get('seconds')).toString(2).padStart(6,0);
-  } else{
-    dm = totalDays(currentTime).toString(2).padStart(6,0);
-    hs = (23 - currentTime.get('hours')).toString(2).padStart(6,0);
+  switch(currentMode) {
+    case 0:
+      dm = (60 - currentTime.get('minutes')).toString(2).padStart(6,0);
+      hs = (60 - currentTime.get('seconds')).toString(2).padStart(6,0);
+      ind = [0,1];
+      console.log("countTimer 0")
+      break;  
+    case 1:
+      dm = totalDays(currentTime).toString(2).padStart(6,0);
+      hs = (23 - currentTime.get('hours')).toString(2).padStart(6,0);
+      ind = [1,0];
+      console.log("countTimer 1")
+      break;        
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    default:
+      
+      ind = (ind[1] == 0) ? ([0,1]) : ([0,0]);
+
+      // console.log(ind);
+
+      dm = String("010101").toString(2).padStart(6,0);
+      hs = String("101010").toString(2).padStart(6,0);
+      console.log("countTimer 2-5")
+      break;  
   }
 
-  let ind = (currentMode == 1) ? ([1,0]): ([0,1]);
   ar = [...ind,...dm,...hs];
 
   //draw the updated ornament.
@@ -191,12 +216,16 @@ let release = e => {
       if(currentMode > 1) {
         //Switch back to countdown mode
         currentMode = 0;
+        clearInterval(setTimer);
+        countTimer = setInterval(updateCountdown,1000);
+
       }else {
         //Switch to setting Minutes.
         currentMode = 2;
         pause();
         
-
+        clearInterval(countTimer);
+        setTimer = setInterval(updateCountdown,333);
       }
 
     } else {
