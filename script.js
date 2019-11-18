@@ -120,13 +120,21 @@ let updateCountdown = () => {
   let ind = (currentMode == 1) ? ([1,0]): ([0,1]);
   ar = [...ind,...dm,...hs];
 
+  //draw the updated ornament.
+  drawOrnament(ar,img);
+}
+
+
+
+function drawOrnament(lights, board) {
+  //Clear the existing canvas settings
   ctx.shadowBlur = 0;
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  ctx.drawImage(img, 0, 0,ctx.canvas.width, ctx.canvas.height);
-  drawLights(ar);
+  ctx.drawImage(board, 0, 0,ctx.canvas.width, ctx.canvas.height);
+  drawLights(lights);
   drawButtons();
-   
 }
+
 
 let dateChange = e => {
   let date = e.target.value.split("-");
