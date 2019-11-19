@@ -241,7 +241,7 @@ let release = e => {
         currentMode = 0;
         clearInterval(setTimer);
         countTimer = setInterval(updateCountdown,1000);
-
+        play();
       }else {
         //Switch to setting Minutes.
         currentMode = 2;
@@ -268,14 +268,45 @@ let release = e => {
   }else if(e.clientX > sx + p(0.64) && e.clientX < sx + p(0.78)) {
     //Right Button
 
+    let m = currentTime.get('minute');
+    let h = currentTime.get('hour');
+    let d = currentTime.get('date');
+    let mo = currentTime.get('month');
+
     switch(currentMode) {
       case 2:
-        let m = currentTime.get('minutes');
-        currentTime.set('minutes',((m++ > 59)?0:m++));
+        currentTime = currentTime.set('minute',((m++ > 59)?0:m++));
         console.log(m);
       break;
-      
+      case 3:        
+        currentTime = currentTime.set('hour',((h++ > 59)?0:h++));
+        console.log(h);
+      break;
+      case 4:
+        if(mo == 10 && d+1 > 31) {
+          d = 1;
+        }else if(d+1 > 30) {
+          d = 1;
+        }else{
+          d++
+        }
+        currentTime = currentTime.set('date',d);
+        console.log(d);
+      break;
+      case 5:
+
+      if(mo + 1 > 11) {
+        mo = 9;
+      }else{
+        mo++;
+      }
+        currentTime = currentTime.set('month', mo);
+        console.log(mo);
+      break;
+            
     }
+
+    setFormVals(currentTime);
 
   }
   console.log(currentMode);
