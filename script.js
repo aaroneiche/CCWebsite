@@ -105,9 +105,9 @@ let updateCountdown = () => {
     //Update the values in the form.
     setFormVals(currentTime);
     
-    if(currentTime.get('seconds') % 12 == 0) {
-      currentMode = !currentMode;
-    }
+    // if(currentTime.get('seconds') % 12 == 0) {
+    //   currentMode = !currentMode;
+    // }
   }
 
   let dm =  [0];
@@ -116,31 +116,52 @@ let updateCountdown = () => {
 
   switch(currentMode) {
     case 0:
+      //Display Minutes and Seconds
       dm = (60 - currentTime.get('minutes')).toString(2).padStart(6,0);
       hs = (60 - currentTime.get('seconds')).toString(2).padStart(6,0);
       ind = [0,1];
       console.log("countTimer 0")
       break;  
     case 1:
+      //Display Hours and Days
       dm = totalDays(currentTime).toString(2).padStart(6,0);
       hs = (23 - currentTime.get('hours')).toString(2).padStart(6,0);
       ind = [1,0];
       console.log("countTimer 1")
       break;        
     case 2:
-    case 3:
-    case 4:
-    case 5:
-    default:
-      
-      ind = (ind[1] == 0) ? ([0,1]) : ([0,0]);
 
-      // console.log(ind);
+      //Setting Minute
+      ind = (ind[1] == 0) ? ([0,1]) : ([0,0]);
 
       dm = String("010101").toString(2).padStart(6,0);
       hs = String("101010").toString(2).padStart(6,0);
-      console.log("countTimer 2-5")
+      
       break;  
+
+    case 3:
+      //Setting Hour
+      ind = (ind[0] == 1) ? ([0,1]) : ([1,1]);
+
+      dm = String("010101").toString(2).padStart(6,0);
+      hs = String("101010").toString(2).padStart(6,0);
+      
+      break;  
+
+    case 4:
+      //Setting Day
+      ind = (ind[1] == 1) ? ([1,0]) : ([1,1]);
+
+      dm = String("010101").toString(2).padStart(6,0);
+      hs = String("101010").toString(2).padStart(6,0);
+      break;
+    case 5:
+      //Setting Month
+      ind = [1,1];
+
+      dm = String("010101").toString(2).padStart(6,0);
+      hs = String("101010").toString(2).padStart(6,0);
+      break;      
   }
 
   ar = [...ind,...dm,...hs];
