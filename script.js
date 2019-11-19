@@ -133,9 +133,9 @@ let updateCountdown = () => {
 
       //Setting Minute
       ind = (ind[1] == 0) ? ([0,1]) : ([0,0]);
-
-      dm = String("010101").toString(2).padStart(6,0);
-      hs = String("101010").toString(2).padStart(6,0);
+      // console.log(currentTime.get('minutes'),currentTime.get('hours'));
+      dm = currentTime.get('hours').toString(2).padStart(6,0);
+      hs = currentTime.get('minutes').toString(2).padStart(6,0);
       
       break;  
 
@@ -143,24 +143,26 @@ let updateCountdown = () => {
       //Setting Hour
       ind = (ind[0] == 1) ? ([0,1]) : ([1,1]);
 
-      dm = String("010101").toString(2).padStart(6,0);
-      hs = String("101010").toString(2).padStart(6,0);
-      
+      dm = currentTime.get('hours').toString(2).padStart(6,0);
+      hs = currentTime.get('minutes').toString(2).padStart(6,0);
+            
       break;  
 
     case 4:
       //Setting Day
       ind = (ind[1] == 1) ? ([1,0]) : ([1,1]);
+      hs = currentTime.get('date').toString(2).padStart(6,0);
+      dm = (currentTime.get('month') + 1).toString(2).padStart(6,0);
 
-      dm = String("010101").toString(2).padStart(6,0);
-      hs = String("101010").toString(2).padStart(6,0);
+      // console.log(currentTime.get(''))
+
       break;
     case 5:
       //Setting Month
       ind = [1,1];
 
-      dm = String("010101").toString(2).padStart(6,0);
-      hs = String("101010").toString(2).padStart(6,0);
+      hs = currentTime.get('date').toString(2).padStart(6,0);
+      dm = (currentTime.get('month') + 1).toString(2).padStart(6,0);
       break;      
   }
 
