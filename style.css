@@ -25,6 +25,10 @@ body{
   padding: 20px;
 }
 
+#instructions img {
+  width: 200px;
+}
+
 header {
   font-size: 24pt;
 }
