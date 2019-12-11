@@ -10,6 +10,25 @@
   }
 }
 
+body{
+  background: url("winterBackground.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  font-family: sans-serif;
+  margin: 0;
+}
+
+#plate{
+  background: rgba(0, 0 ,0 , 0.60);
+  padding: 20px;
+}
+
+header {
+  font-size: 24pt;
+}
+
 section {
   width: 300px;
 }

@@ -20,95 +20,94 @@
   </style>
 </head>
 <body>
-  <header>Christmas Countdown</header>
-  <section id="explanation">
-      Christmas countdown is a Christmas Tree ornament that counts down
-      to Christmas, in binary. It's a fun way to learn how to read binary, 
-      and unique ornament to add to your Christmas Tree.
-  </section>
-  <div id="virtualOrnament">
-      <form>
-        <div>
-            <input type="date" name="" id="date">
-            <input type="time" name="" id="time" step="1">
+  <div id="plate">
+      <header>Christmas Countdown</header>
+      <section id="explanation">
+          Christmas countdown is a Christmas Tree ornament that counts down
+          to Christmas, in binary. It's a fun way to learn how to read binary, 
+          and unique ornament to add to your Christmas Tree.
+      </section>
+      <div id="virtualOrnament">
+          <form>
+            <div>
+                <input type="date" name="" id="date">
+                <input type="time" name="" id="time" step="1">
+            </div>
+            <button id="playpause">Resume</button>
+          </form>
+          <canvas height="300" width="300">
+            <!-- Probably something in here. -->
+          </canvas>
         </div>
-        <button id="playpause">Resume</button>
-      </form>
-      <canvas height="300" width="300">
-        <!-- Probably something in here. -->
-      </canvas>
-    </div>
+    
+      <!-- <section id="video-instructions">
+          <iframe width="300" height="169" src="https://www.youtube.com/embed/eBa2Mm-nP50" frameborder="0" allow="accelerometer; autoplay; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section> -->
+      <section id="instructions">
+        <h2>How to Set Christmas Countdown.</h2>
+        <p>
+          Christmas Countdown will countdown from whatever time you set. When you put Christmas Countdown into set mode, the time displayed by the binary lights will be the current month, day, hour and minute. The Day/Hour and Minute/Second lights flash in the following way to tell you which value you're setting: 
+        </p>
+        <table>
+          <tr>
+            <th> </th>
+            <th>Day/Hour</th>
+            <th>Minute/Second</th>
+          </tr>
+          <tr>
+            <td>Minute</td>
+            <td>Off</td>
+            <td>Blinking</td>
+          </tr>
+          <tr>
+            <td>Hour</td>
+            <td>Blinking</td>
+            <td>Solid</td>
+          </tr>
+          <tr>
+            <td>Day</td>
+            <td>Solid</td>
+            <td>Blinking</td>
+          </tr>
+          <tr>
+            <td>Month</td>
+            <td>Solid</td>
+            <td>Solid</td>
+          </tr>      
+        </table>
+    
+        <p>To enter setting mode, press and hold the left button for 3 or more seconds. The light pattern will change and the Day/Hour and Minute/Second lights will show "minutes" setting mode.</p>
+        <p>Pressing the right button will increase the value being set. Pressing the left button will change to the next value. When you reach the maximum value, it will wrap around to 1.</p>
+        <p>As an example, here is how to set the date to November 29th 2:27pm:</p> 
+        <ol>
+          <li>Press and hold the left button for 3 or more seconds, then release.
+              - The DH and MS lights will be off and blinking. You're in minute mode.
+          </li>
+          <li>
+              Press the right button until the lights read: 0 1 1 0 1 1 - 27 in binary
+          </li>
+          <li>
+              Press the left button to switch to hour mode
+              - The DH and MS lights will be blinking and solid. You're in hour mode.
+          </li>
+          <li>
+            Press the right button until the lights read: 0 0 1 1 1 0 - 14 (2pm) in binary
+          </li>
+          <li>Press the left button to switch to day mode</li>
+          <li>Press the right button until the lights read: 0 1 1 1 0 1 - 29 in binary.</li>
+          <li>Press the left button to switch to Month mode</li>
+          <li>
+            Press the right button until the lights read: 0 0 1 0 1 1 - 11 in binary. Please note that months will only go between 10, 11, and 12.
+          </li>
+          <li>Press and hold the left button for 3 or more seconds to switch back to countdown mode.</li>
+        </ol>
+        <p>
+          Christmas Countdown is only capable of counting a maximum of 63 days, meaning that the earliest you can start counting is October 23rd. Because of this, you can only set the month to 10, 11, or 12.
+        </p>
+      </section>
+  </div>
 
-  <section id="video-instructions">
-      <iframe width="300" height="169" src="https://www.youtube.com/embed/eBa2Mm-nP50" frameborder="0" allow="accelerometer; autoplay; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </section>
-  <section id="instructions">
-    <h2>How to Set Christmas Countdown.</h2>
-    <p>
-      Christmas Countdown will countdown from whatever time you set. When you put Christmas Countdown into set mode, the time displayed by the binary lights will be the current month, day, hour and minute. The Day/Hour and Minute/Second lights flash in the following way to tell you which value you're setting: 
-    </p>
-    <table>
-      <tr>
-        <th> </th>
-        <th>Day/Hour</th>
-        <th>Minute/Second</th>
-      </tr>
-      <tr>
-        <td>Minute</td>
-        <td>Off</td>
-        <td>Blinking</td>
-      </tr>
-      <tr>
-        <td>Hour</td>
-        <td>Blinking</td>
-        <td>Solid</td>
-      </tr>
-      <tr>
-        <td>Day</td>
-        <td>Solid</td>
-        <td>Blinking</td>
-      </tr>
-      <tr>
-        <td>Month</td>
-        <td>Solid</td>
-        <td>Solid</td>
-      </tr>      
-    </table>
-
-    <p>To enter setting mode, press and hold the left button for 3 or more seconds. The light pattern will change and the Day/Hour and Minute/Second lights will show "minutes" setting mode.</p>
-    <p>Pressing the right button will increase the value being set. Pressing the left button will change to the next value. When you reach the maximum value, it will wrap around to 1.</p>
-    <p>As an example, here is how to set the date to November 29th 2:27pm:</p> 
-    <ol>
-      <li>Press and hold the left button for 3 or more seconds, then release.
-          - The DH and MS lights will be off and blinking. You're in minute mode.
-      </li>
-      <li>
-          Press the right button until the lights read: 0 1 1 0 1 1 - 27 in binary
-      </li>
-      <li>
-          Press the left button to switch to hour mode
-          - The DH and MS lights will be blinking and solid. You're in hour mode.
-      </li>
-      <li>
-        Press the right button until the lights read: 0 0 1 1 1 0 - 14 (2pm) in binary
-      </li>
-      <li>Press the left button to switch to day mode</li>
-      <li>Press the right button until the lights read: 0 1 1 1 0 1 - 29 in binary.</li>
-      <li>Press the left button to switch to Month mode</li>
-      <li>
-        Press the right button until the lights read: 0 0 1 0 1 1 - 11 in binary. Please note that months will only go between 10, 11, and 12.
-      </li>
-      <li>Press and hold the left button for 3 or more seconds to switch back to countdown mode.</li>
-    </ol>
-    <p>
-      Christmas Countdown is only capable of counting a maximum of 63 days, meaning that the earliest you can start counting is October 23rd. Because of this, you can only set the month to 10, 11, or 12.
-    </p>
-  </section>
-  <section id="instructions">
-      Mauris sodales facilisis interdum. Donec non imperdiet eros. Sed tristique bibendum vestibulum. Donec ligula lectus, gravida in ligula vel, tincidunt mattis tellus. Maecenas ullamcorper ornare lorem, facilisis sodales ante venenatis eu. Praesent consectetur dui quis fermentum vestibulum. Praesent ipsum magna, auctor non porta sed, viverra quis dolor. Donec in sollicitudin lacus. Duis aliquam ipsum arcu, vitae pretium ex vulputate ac. Cras fringilla porta orci, et ornare ante vestibulum sollicitudin.
-
-      Mauris consectetur elit mollis varius tincidunt. Pellentesque tincidunt odio vel est suscipit, ac facilisis ipsum mollis. Vivamus suscipit accumsan eros, sed tincidunt urna suscipit a. Proin egestas sodales nulla ut efficitur. Praesent ultrices urna quis velit venenatis, sit amet pretium nulla luctus. Nunc hendrerit, felis eget egestas dapibus, ante nunc lobortis tortor, iaculis porta nibh arcu nec sapien. Nunc congue tortor a nisi sodales tincidunt. Etiam non vulputate lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque mauris lacus, cursus at hendrerit sit amet, tristique vitae nisl. Cras sollicitudin mauris varius enim ultrices, in eleifend sapien maximus.
-  </section>
+  
   
 
 
